@@ -7,18 +7,18 @@ import puppeteer from "puppeteer";
     try {
         await page.goto("https://bing.com", { waitUntil: 'networkidle2' });
         await page.waitForSelector('#sb_form_q');
-        await page.type('#sb_form_q', 'java');
+        await page.type('#sb_form_q', 'top tech company');
         await page.waitForSelector('#search_icon');
         await page.click('#search_icon');
 
         await page.waitForNavigation({ waitUntil: 'networkidle2' });
         
         // Ensure the selector is correct. Use a more specific selector if necessary.
-        await page.waitForSelector('.b_algo');
+        await page.waitForSelector('#b_results .b_algo');
 
         // Extracting results using evaluate
         const results = await page.evaluate(() => {
-            const elements = document.querySelectorAll('.b_algo');
+            const elements = document.querySelectorAll('#b_results .b_algo');
             return [...elements].map(element => {
                 const title = element.querySelector('h2 a')?.innerText;
                 const url = element.querySelector('h2 a')?.href;
